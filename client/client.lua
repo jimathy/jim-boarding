@@ -122,7 +122,7 @@ local forward = false
 local backward = false
 local left = false
 local right = false
-RegisterKeyMapping('skateforward', 'Skateboard: Forward', 'keyboard', 'W')
+RegisterKeyMapping('+skateforward', 'Skateboard: Forward', 'keyboard', 'W')
 RegisterCommand('+skateforward', function()
 	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) and not overSpeed then
 		CreateThread(function()
@@ -233,8 +233,8 @@ RegisterNetEvent("jim-skateboard:GetOn", function()
 	CreateThread(function()
 		while Attached do
 			StopCurrentPlayingAmbientSpeech(skateboard.Driver)
-			local x = GetEntityRotation(skateboard.Entity).x
-			local y = GetEntityRotation(skateboard.Entity).y
+			overSpeed = (GetEntitySpeed(skateboard.Entity)*3.6) > 90
+			local x, y, z = table.unpack(GetEntityRotation(skateboard.Entity))
 			if (-40.0 < x and x > 40.0) or (-40.0 < y and y > 40.0) then
 				DetachEntity(PlayerPedId(), false, false)
 				TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1)
@@ -242,9 +242,6 @@ RegisterNetEvent("jim-skateboard:GetOn", function()
 				StopAnimTask(PlayerPedId(), "move_strafe@stealth", "idle", 1.0)
 				SetPedToRagdoll(PlayerPedId(), 5000, 4000, 0, true, true, false)
 			end
-			overSpeed = (GetEntitySpeed(skateboard.Entity)*3.6) > 90
-			TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1)
-			ForceVehicleEngineAudio(skateboard.Entity, 0)
 
 			if not DoesEntityExist(skateboard.Entity) then
 				Attached = false
