@@ -119,6 +119,9 @@ RegisterCommand('skategetoff', function()
 end)
 
 local forward = false
+local backward = false
+local left = false
+local right = false
 RegisterKeyMapping('skateforward', 'Skateboard: Forward', 'keyboard', 'W')
 RegisterCommand('+skateforward', function()
 	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) and not overSpeed then
@@ -126,20 +129,17 @@ RegisterCommand('+skateforward', function()
 			if not forward then
 				forward = true
 				while forward do
-					TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 9, 0.1)
+					if not right and not left then TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 9, 0.1) end
+					if left then TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 7, 0.1) end
+					if right then TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 8, 0.1) end
 					Wait(50)
 				end
 			else return	end
 		end)
 	end
 end)
-RegisterCommand('-skateforward', function()
-	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then
-		forward = false
-		TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1)
-	end
-end)
-local backward = false
+RegisterCommand('-skateforward', function() if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then forward = false TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1) end end)
+
 RegisterKeyMapping('+skatebackward', 'Skateboard: Backward', 'keyboard', 'S')
 RegisterCommand('+skatebackward', function()
 	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) and not overSpeed then
@@ -147,20 +147,21 @@ RegisterCommand('+skatebackward', function()
 			if not backward then
 				backward = true
 				while backward do
-					TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 22, 0.1)
+					if left then
+						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 13, 0.1)
+					elseif right then
+						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 14, 0.1)
+					elseif not right and not left then
+						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 22, 0.1)
+					end
 					Wait(50)
 				end
 			else return	end
 		end)
 	end
 end)
-RegisterCommand('-skatebackward', function()
-	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then
-		backward = false
-		TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1)
-	end
-end)
-local left = false
+RegisterCommand('-skatebackward', function() if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then backward = false	TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1) end end)
+
 RegisterKeyMapping('+skateleft', 'Skateboard: Left', 'keyboard', 'A')
 RegisterCommand('+skateleft', function()
 	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) and not overSpeed then
@@ -168,11 +169,7 @@ RegisterCommand('+skateleft', function()
 			if not left then
 				left = true
 				while left do
-					if backward then
-						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 13, 0.1)
-					elseif forward then
-						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 7, 0.1)
-					else
+					if not backward and not forward then
 						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 4, 0.1)
 					end
 					Wait(50)
@@ -181,13 +178,9 @@ RegisterCommand('+skateleft', function()
 		end)
 	end
 end)
-RegisterCommand('-skateleft', function()
-	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then
-		left = false
-	end
-end)
+RegisterCommand('-skateleft', function() if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then	left = false end end)
 
-local right = false
+
 RegisterKeyMapping('+skateright', 'Skateboard: Right', 'keyboard', 'D')
 RegisterCommand('+skateright', function()
 	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) and not overSpeed then
@@ -195,11 +188,7 @@ RegisterCommand('+skateright', function()
 			if not right then
 				right = true
 				while right do
-					if backward then
-						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 14, 0.1)
-					elseif forward then
-						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 8, 0.1)
-					else
+					if not backward and not forward then
 						TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 5, 0.1)
 					end
 					Wait(50)
@@ -208,11 +197,7 @@ RegisterCommand('+skateright', function()
 		end)
 	end
 end)
-RegisterCommand('-skateright', function()
-	if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then
-		right = false
-	end
-end)
+RegisterCommand('-skateright', function() if IsEntityAttachedToEntity(PlayerPedId(), skateboard.Entity) then right = false end end)
 
 RegisterKeyMapping('skatejump', 'Skateboard: Jump', 'keyboard', 'SPACE')
 RegisterCommand('skatejump', function()
@@ -257,8 +242,6 @@ RegisterNetEvent("jim-skateboard:GetOn", function()
 				StopAnimTask(PlayerPedId(), "move_strafe@stealth", "idle", 1.0)
 				SetPedToRagdoll(PlayerPedId(), 5000, 4000, 0, true, true, false)
 			end
-
-			--if IsControlJustReleased(0, 113) then DetachEntity(PlayerPedId(), false, false) end
 			overSpeed = (GetEntitySpeed(skateboard.Entity)*3.6) > 90
 			TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 1)
 			ForceVehicleEngineAudio(skateboard.Entity, 0)
@@ -279,9 +262,10 @@ RegisterNetEvent("jim-skateboard:GetOn", function()
 				DetachEntity(PlayerPedId(), false, false)
 				TaskVehicleTempAction(skateboard.Driver, skateboard.Entity, 1, 100)
 				Attached = false
+				forward = false left = false right = false backward = false
 				StopAnimTask(PlayerPedId(), "move_strafe@stealth", "idle", 1.0)
 			end
-			Wait(100)
+			Wait(1000)
 		end
 	end)
 end)
