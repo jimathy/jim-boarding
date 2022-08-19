@@ -15,5 +15,3 @@ RegisterNetEvent('jim-skateboard:server:toggleItem', function(give, item, amount
 		end
 	end
 end)
-
---RegisterNetEvent("jim-skateboard:ShareTarget", function(board) local src = source TriggerClientEvent("jim-skateboard:GetTarget", -1, board, src) end)
