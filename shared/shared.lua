@@ -1,5 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-RegisterNetEvent('QBCore:Client:UpdateObject', function() QBCore = exports['qb-core']:GetCoreObject() end)
+QBCore = exports['qb-core']:GetCoreObject()
 
 function loadModel(model) if not HasModelLoaded(model) then RequestModel(model) while not HasModelLoaded(model) do Wait(0) end end end
 function unloadModel(model) SetModelAsNoLongerNeeded(model) end

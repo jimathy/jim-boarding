@@ -1,12 +1,5 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-RegisterNetEvent('QBCore:Client:UpdateObject', function() QBCore = exports['qb-core']:GetCoreObject() end)
+local Props, Targets, Peds, skateboard, Dir = {}, {}, {}, {}, {}
 
-local Props = {}
-local Targets = {}
-local Peds = {}
-
-local skateboard = {}
-local Dir = {}
 RegisterNetEvent("jim-skateboard:PickPlace", function()
 	if not IsPedSittingInAnyVehicle(PlayerPedId()) then
 		if DoesEntityExist(skateboard.Entity) then
@@ -28,11 +21,10 @@ RegisterNetEvent("jim-skateboard:PickPlace", function()
 			loadModel(`S_M_M_AutoShop_01`)
 			loadModel(`v_res_skateboard`)
 			skateboard.Entity = CreateVehicle(`triBike3`, 0, 0, 0, 0, true)
-			skateboard.Skate = makeProp({ prop = `v_res_skateboard`, coords = vector4(0,0,0,0) }, 0, 1)
+			skateboard.Skate = makeProp({ prop = `v_res_skateboard`, coords = vec4(0,0,0,0) }, 0, 1)
 			SetEntityNoCollisionEntity(skateboard.Entity, PlayerPedId(), false)
 			SetEntityNoCollisionEntity(skateboard.Skate, PlayerPedId(), false)
 
-			-- Load models
 			while not DoesEntityExist(skateboard.Entity) do Wait(5) end
 			while not DoesEntityExist(skateboard.Skate) do Wait(5) end
 			SetVehicleHandlingFloat(skateboard.Entity, "CHandlingData", "fSteeringLock", 9.0)
@@ -65,7 +57,7 @@ RegisterNetEvent("jim-skateboard:PickPlace", function()
 			SetEntityVisible(skateboard.Entity, false)
 			AttachEntityToEntity(skateboard.Skate, skateboard.Entity, GetPedBoneIndex(PlayerPedId(), 28422), 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, false, true, true, true, 1, true)
 
-			local loc = vector4(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 1.0, 0).x, GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 1.0, 0).y, GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 1.0, 0).z, GetEntityHeading(PlayerPedId()))
+			local loc = vec4(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 1.0, 0).x, GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 1.0, 0).y, GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 1.0, 0).z, GetEntityHeading(PlayerPedId()))
 			skateboard.Driver = makePed(68070371, loc, 0, 1, nil, nil)
 			SetEntityNoCollisionEntity(skateboard.Driver, PlayerPedId(), false)
 
@@ -75,11 +67,10 @@ RegisterNetEvent("jim-skateboard:PickPlace", function()
 			SetEntityVisible(skateboard.Driver, false)
 			FreezeEntityPosition(skateboard.Driver, true)
 			TaskWarpPedIntoVehicle(skateboard.Driver, skateboard.Entity, -1)
-
 			Targets[#Targets+1] =
-				exports["qb-target"]:AddTargetEntity(skateboard.Skate, { options = {
-					{ event = "jim-skateboard:GetOn", icon = "fas fa-car", label = "Get on", board = skateboard.Skate },
-					{ event = "jim-skateboard:PickPlace", icon = "fas fa-hand-holding", label = "Pick up", board = skateboard.Skate },
+			exports["qb-target"]:AddTargetEntity(skateboard.Skate, { options = {
+				{ event = "jim-skateboard:GetOn", icon = "fas fa-car", label = "Get on", board = skateboard.Skate },
+				{ event = "jim-skateboard:PickPlace", icon = "fas fa-hand-holding", label = "Pick up", board = skateboard.Skate },
 				}, distance = 2.5,	})
 
 			loadAnimDict("pickup_object")
@@ -167,7 +158,7 @@ RegisterCommand('skatejump', function()
 			while IsControlPressed(0, 22) do
 				Wait(10)
 				duration = duration + 10.0
-				ForceVehicleEngineAudio(skateboard.Entity, 0)
+				--ForceVehicleEngineAudio(skateboard.Entity, 0)
 			end
 			boost = 6.0 * duration / 250.0
 			if boost > 6.0 then boost = 6.0 end
@@ -179,7 +170,7 @@ RegisterCommand('skatejump', function()
 end)
 
 local Attached = false
-local overSpeed
+local overSpeed = 0
 RegisterNetEvent("jim-skateboard:GetOn", function()
 	loadAnimDict("move_strafe@stealth")
 	loadAnimDict("move_crouch_proto")
@@ -227,10 +218,9 @@ RegisterNetEvent("jim-skateboard:GetOn", function()
 	end)
 end)
 
-AddEventHandler('onResourceStop', function(resource) if resource ~= GetCurrentResourceName() then return end
+AddEventHandler('onResourceStop', function(r) if r ~= GetCurrentResourceName() or not LocalPlayer.state.isLoggedIn then return end
 	for _, v in pairs(Peds) do unloadModel(GetEntityModel(v)) DeletePed(v) end
 	for i = 1, #Props do unloadModel(GetEntityModel(Props[i])) DeleteObject(Props[i]) end
-	DeleteEntity(cardHat)
 	if DoesEntityExist(skateboard.Entity) then
 		DeletePed(skateboard.Driver)
 		DeleteVehicle(skateboard.Entity)

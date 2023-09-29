@@ -1,6 +1,3 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-RegisterNetEvent('QBCore:Server:UpdateObject', function() if source ~= '' then return false end	QBCore = exports['qb-core']:GetCoreObject() end)
-
 QBCore.Functions.CreateUseableItem("skateboard", function(source, item) TriggerClientEvent("jim-skateboard:PickPlace", source) end)
 
 RegisterNetEvent('jim-skateboard:server:toggleItem', function(give, item, amount)
