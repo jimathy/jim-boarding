@@ -1,4 +1,4 @@
-name "jim-stakeboard"
+name "jim-skateboard"
 author "Jimathy"
 version "2.0"
 description "Electric Skateboard Script By Jimathy"

@@ -68,6 +68,7 @@ end
 local function makeFakeSkateboard(Ped, remove) -- The animation for picking up and placing the board
 	local prop = makeProp({ prop = "v_res_skateboard", coords = vec4(0,0,0,0), false, true})
 	if GetEntityModel(Ped) == `a_c_cat_01` then
+		SetPedCanRagdoll(PlayerPedId(), false)
 		AttachEntityToEntity(prop, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 31086), 0.18, -0.14, 0.0, -87.0, -100.0, 1.0, true, true, false, false, 1, true)
 	else
 		AttachEntityToEntity(prop, Ped, GetPedBoneIndex(Ped, 57005), 0.3, 0.08, 0.09, -86.0, -60.0, 50.0, true, true, false, false, 1, true)
@@ -133,11 +134,7 @@ RegisterCommand('skategetoff', function()
 			TaskVehicleTempAction(skateboard.Driver, skateboard.Bike, 1, 100)
 			Attached = false
 			Dir = {}
-			if GetEntityModel(PlayerPedId()) == `a_c_cat_01` then
-				ClearPedTasks(PlayerPedId())
-			else
-				stopAnim("move_strafe@stealth", "idle")
-			end
+			ClearPedTasks(PlayerPedId())
 		end
 	end
 end)
