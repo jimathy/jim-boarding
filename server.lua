@@ -1,0 +1,1 @@
+createUseableItem("skateboard", function(source, item) TriggerClientEvent("jim-skateboard:PickPlace", source) end)
