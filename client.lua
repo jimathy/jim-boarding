@@ -269,7 +269,7 @@ RegisterNetEvent("jim-skateboard:GetOn", function() local Ped = PlayerPedId()
 	SetEntityCollision(Ped, true, true)
 	Attached = true
 	updateCamLoc()
-	drawText(nil, {"[G] - Get Off Stakeboard", "[H] - Unlock/Lock Cam"}, "w")
+	drawText(nil, {"[G] - Get Off Skateboard", "[H] - Unlock/Lock Cam"}, "w")
 	CreateThread(function()
 		while Attached do
 			StopCurrentPlayingAmbientSpeech(skateboard.Driver)
