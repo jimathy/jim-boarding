@@ -19,6 +19,10 @@ With the help of `jim_bridge` this also brings more optimization and more featur
 ```lua
 	["skateboard"] 	  	= {["name"] = "skateboard",			["label"] = "Skateboard",		["weight"] = 1,    ["type"] = "item", ["image"] = "skateboard.png", 	["unique"] = true, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = ""},
 ```
+New format:
+```lua
+	skateboard 	  	= { name = "skateboard",	label = "Skateboard",	weight = 1,   type = "item", image = "skateboard.png", 	unique = true, 	useable = true, 	shouldClose = true,	combinable = nil,  	description = "a jimnastic board"},
+```
 4. Add the image to your inventory images
 5. Start your server
 
