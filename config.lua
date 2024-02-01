@@ -1,4 +1,5 @@
 Config = {
+    Lan = "en",
     System = {
         Debug = false,
 

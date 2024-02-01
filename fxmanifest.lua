@@ -1,12 +1,13 @@
 name "jim-skateboard"
 author "Jimathy"
-version "2.0"
+version "2.0.1"
 description "Electric Skateboard Script By Jimathy"
 fx_version "cerulean"
 game "gta5"
 lua54 'yes'
 
 shared_scripts {
+    'locales/*.lua',
     'config.lua',
     -- Required core scripts
     '@ox_lib/init.lua',

@@ -1,28 +1,6 @@
 
 local skateboard, Dir, customCam, Attached, overSpeed = {}, {}, nil, false, nil
 
-local function createSkateboardEntity()
-    local entity = makeVeh("triBike3", vec4(0, 0, 0, 0))
-    local prop = makeProp({ prop = "v_res_skateboard", coords = vec4(0, 0, 0, 0) }, 0, 1)
-	while not DoesEntityExist(entity) or not DoesEntityExist(prop) do Wait(5) end
-
-	SetEntityVisible(entity, (Config.System.Debug), 0)
-
-	AttachEntityToEntity(prop, entity, GetPedBoneIndex(PlayerPedId(), 28422), 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, false, true, true, true, 1, true)
-
-    SetEntityNoCollisionEntity(entity, PlayerPedId(), false)
-    SetEntityNoCollisionEntity(prop, PlayerPedId(), false)
-
-	SetEntityCompletelyDisableCollision(entity, true, true)
-	SetEntityCompletelyDisableCollision(prop, true, true)
-
-	SetVehicleDoorsLocked(entity, 10)
-
-	DisableCamCollisionForEntity(entity)
-	DisableCamCollisionForEntity(prop)
-    return entity, prop
-end
-
 local function configureSkateboard(entity)
 	for k, v in pairs({
 		["fSteeringLock"] = 9.0,
@@ -53,18 +31,6 @@ local function configureSkateboard(entity)
 	end
 end
 
-local function createBikeDriver(bike)
-	local entity = makePed("S_M_M_AutoShop_01", vec4(0.0, 0.0, 0.0, 0.0), 0, 1, nil, nil)
-	SetEntityNoCollisionEntity(entity, PlayerPedId(), false)
-	SetEntityCompletelyDisableCollision(entity, true, true)
-	SetEnableHandcuffs(entity, true)
-	SetEntityInvincible(entity, true)
-	FreezeEntityPosition(entity, true)
-	TaskWarpPedIntoVehicle(entity, bike, -1)
-	SetEntityVisible(entity, (Config.System.Debug), 0)
-	return entity
-end
-
 local function makeFakeSkateboard(Ped, remove) -- The animation for picking up and placing the board
 	local prop = makeProp({ prop = "v_res_skateboard", coords = vec4(0,0,0,0), false, true})
 	if GetEntityModel(Ped) == `a_c_cat_01` then
@@ -77,7 +43,7 @@ local function makeFakeSkateboard(Ped, remove) -- The animation for picking up a
 	if remove then
 		DeleteVehicle(skateboard.Bike)
 		destroyProp(skateboard.Skate)
-		DeleteEntity(skateboard.Driver)
+		DeletePed(skateboard.Driver)
 	end
 	Wait(900)
 	destroyProp(prop)
@@ -92,19 +58,46 @@ RegisterNetEvent("jim-skateboard:PickPlace", function() local Ped = PlayerPedId(
 			Attached = false
 			Wait(100)
 			stopTempCam()
-
 			makeFakeSkateboard(Ped, true) -- pick up animation
-
 			addItem("skateboard", 1)
 			skateboard = {}
 			Dir = {}
 		else
-			--Make and configure skateboard
-			skateboard.Bike, skateboard.Skate = createSkateboardEntity()
+			local pedCoords = GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0.5, -40.5)
+			skateboard.Bike = makeVeh("triBike3", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0))
+			skateboard.Skate = makeProp({ prop = "v_res_skateboard", coords = vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0) }, 1, 1)
+			while not DoesEntityExist(skateboard.Bike) or not DoesEntityExist(skateboard.Skate) do Wait(5) end
+
+			SetEntityNoCollisionEntity(skateboard.Bike, Ped, false)
+			SetEntityNoCollisionEntity(skateboard.Skate, Ped, false)
+
+			Wait(500)
+
 			configureSkateboard(skateboard.Bike)
 
-			-- Driver properties
-			skateboard.Driver = createBikeDriver(skateboard.Bike)
+			SetEntityCompletelyDisableCollision(skateboard.Bike, true, true)
+			SetEntityCompletelyDisableCollision(skateboard.Skate, true, true)
+
+			SetEntityVisible(skateboard.Bike, Config.System.Debug, 0)
+			AttachEntityToEntity(skateboard.Skate, skateboard.Bike, GetPedBoneIndex(Ped, 28422), 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, false, true, true, true, 1, true)
+
+			skateboard.Driver = ClonePed(Ped, true, false, true)
+			SetEntityCoords(skateboard.Driver, pedCoords.x, pedCoords.y, pedCoords.z, true)
+			while not DoesEntityExist(skateboard.Driver) do Wait(0) end
+			--skateboard.Driver = makePed("S_M_M_AutoShop_01", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0), 0, 1, nil, nil)
+			SetEntityNoCollisionEntity(skateboard.Driver, Ped, false)
+			SetEntityCompletelyDisableCollision(skateboard.Driver, true, true)
+
+			SetEnableHandcuffs(skateboard.Driver, true)
+			SetEntityInvincible(skateboard.Driver, true)
+			FreezeEntityPosition(skateboard.Driver, true)
+
+			while not IsPedSittingInAnyVehicle(skateboard.Driver) do
+				print("forcing ped to veh")
+				SetEntityVisible(skateboard.Driver, Config.System.Debug, 0)
+				TaskWarpPedIntoVehicle(skateboard.Driver, skateboard.Bike, -1)
+				Wait(10)
+			end
 
 			local options = {
 				{ action = function() TriggerEvent("jim-skateboard:GetOn", { board = skateboard.Skate }) end,
@@ -117,6 +110,12 @@ RegisterNetEvent("jim-skateboard:PickPlace", function() local Ped = PlayerPedId(
 			createEntityTarget(skateboard.Bike, options, 2.5)
 
 			makeFakeSkateboard(Ped)
+
+			DisableCamCollisionForEntity(skateboard.Bike)
+			DisableCamCollisionForEntity(skateboard.Skate)
+			DisableCamCollisionForEntity(skateboard.Driver)
+			SetVehicleDoorsLocked(skateboard.Bike, 10)
+
 			SetEntityCoords(skateboard.Bike, GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0.5, 1.5))
 			SetEntityHeading(skateboard.Bike, GetEntityHeading(PlayerPedId())+90)
 			removeItem("skateboard", 1)
@@ -269,7 +268,10 @@ RegisterNetEvent("jim-skateboard:GetOn", function() local Ped = PlayerPedId()
 	SetEntityCollision(Ped, true, true)
 	Attached = true
 	updateCamLoc()
-	drawText(nil, {"[G] - Get Off Stakeboard", "[H] - Unlock/Lock Cam"}, "w")
+	drawText(nil, {
+		(Config.System.drawText == "gta" and "~INPUT_VEH_FLY_UNDERCARRIAGE~" or "[G]").." - "..Loc[Config.Lan].getoff,
+		(Config.System.drawText == "gta" and "~INPUT_VEH_HEADLIGHT~" or "[H]") .." - "..Loc[Config.Lan].lockcam,
+	}, "w")
 	CreateThread(function()
 		while Attached do
 			StopCurrentPlayingAmbientSpeech(skateboard.Driver)
