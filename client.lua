@@ -79,6 +79,7 @@ RegisterNetEvent("jim-skateboard:PickPlace", function() local Ped = PlayerPedId(
 			SetEntityCompletelyDisableCollision(skateboard.Skate, true, true)
 
 			SetEntityVisible(skateboard.Bike, Config.System.Debug, 0)
+
 			AttachEntityToEntity(skateboard.Skate, skateboard.Bike, GetPedBoneIndex(Ped, 28422), 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, false, true, true, true, 1, true)
 
 			skateboard.Driver = ClonePed(Ped, true, false, true)
@@ -93,7 +94,6 @@ RegisterNetEvent("jim-skateboard:PickPlace", function() local Ped = PlayerPedId(
 			FreezeEntityPosition(skateboard.Driver, true)
 
 			while not IsPedSittingInAnyVehicle(skateboard.Driver) do
-				print("forcing ped to veh")
 				SetEntityVisible(skateboard.Driver, Config.System.Debug, 0)
 				TaskWarpPedIntoVehicle(skateboard.Driver, skateboard.Bike, -1)
 				Wait(10)
