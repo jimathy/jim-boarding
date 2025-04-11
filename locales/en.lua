@@ -2,5 +2,7 @@ Loc = Loc or {}
 
 Loc["en"] = {
     getoff = "Get Off Skateboard",
-    lockcam = "Unlock/Lock Cam",
+    getoffSurf = "Get Off Surfboard",
+    lockcam = "Lock Cam",
+    jump = "Jump"
 }
