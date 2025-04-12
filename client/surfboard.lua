@@ -30,6 +30,10 @@ RegisterNetEvent(getScript()..":SurfBoard:PickPlace", function(data)
 	if not data.prop then
 		data.prop = SurfboardItemModels[data.name]
 	end
+	if not IsModelValid(GetHashKey(data.prop)) then
+		print("^1Error^7: ^1Can't place this model, try another location")
+		return
+	end
 	surfboard = true
 	local Ped = PlayerPedId()
 	if not IsPedSittingInAnyVehicle(Ped) then

@@ -45,6 +45,10 @@ RegisterNetEvent(getScript()..":Skateboard:PickPlace", function(data)
 	if not data.prop then
 		data.prop = SkateboardItemModels[data.name]
 	end
+	if not IsModelValid(GetHashKey(data.prop)) then
+		print("^1Error^7: ^1Can't place this model, try another location")
+		return
+	end
 	jsonPrint(data)
 	local Ped = PlayerPedId()
 	if not IsPedSittingInAnyVehicle(Ped) then
