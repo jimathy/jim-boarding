@@ -6,7 +6,6 @@ end
 
 for k, v in pairs(SurfboardItemModels) do
     createUseableItem(k, function(source, item)
-        print("test")
         TriggerClientEvent(getScript()..":SurfBoard:PickPlace", source, { name = k })
     end)
 end

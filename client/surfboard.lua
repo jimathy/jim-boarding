@@ -99,9 +99,9 @@ RegisterNetEvent(getScript()..":SurfBoard:PickPlace", function(data)
 
 			local options = {
 				{ action = function() TriggerEvent(getScript()..":Surfboard:GetOn", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
-					icon = "fas fa-car", label = "Get on", },
+					icon = "fas fa-car", label = locale("targets", "getOn"), },
 				{ action = function() TriggerEvent(getScript()..":SurfBoard:PickPlace", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
-					icon = "fas fa-hand-holding", label = "Pick up", },
+					icon = "fas fa-hand-holding", label = locale("targets", "pickUp"), },
 			}
 
 			createEntityTarget(skateboard.Skate, options, 2.5)

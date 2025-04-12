@@ -1,4 +1,4 @@
-RegisterKeyMapping('skategetoff', 'Skateboard: Get Off', 'keyboard', 'G')
+RegisterKeyMapping('skategetoff', locale("keyMaps", "getOff"), 'keyboard', 'G')
 RegisterCommand('skategetoff', function()
 	if Attached then
 		if not IsEntityInAir(skateboard.Bike) then
@@ -12,7 +12,7 @@ RegisterCommand('skategetoff', function()
 	end
 end)
 
-RegisterKeyMapping('+skateforward', 'Skateboard: Forward', 'keyboard', 'W')
+RegisterKeyMapping('+skateforward', locale("keyMaps", "forward"), 'keyboard', 'W')
 RegisterCommand('+skateforward', function()
 	if Attached and not overSpeed then
 		CreateThread(function()
@@ -28,7 +28,7 @@ RegisterCommand('+skateforward', function()
 end)
 RegisterCommand('-skateforward', function() if Attached then Dir.forward = nil TaskVehicleTempAction(skateboard.Driver, skateboard.Bike, 1, 1) end end)
 
-RegisterKeyMapping('+skatebackward', 'Skateboard: Backward', 'keyboard', 'S')
+RegisterKeyMapping('+skatebackward', locale("keyMaps", "backward"), 'keyboard', 'S')
 RegisterCommand('+skatebackward', function()
 	if Attached and not overSpeed then
 		CreateThread(function()
@@ -49,7 +49,7 @@ end)
 RegisterCommand('-skatebackward', function() if Attached then Dir.backward = nil TaskVehicleTempAction(skateboard.Driver, skateboard.Bike, 1, 1) end end)
 
 local pressed = false
-RegisterKeyMapping('+skateleft', 'Skateboard: Left', 'keyboard', 'A')
+RegisterKeyMapping('+skateleft', locale("keyMaps", "left"), 'keyboard', 'A')
 RegisterCommand('+skateleft', function()
 	if Attached and not overSpeed then
 		if surfboard then
@@ -66,7 +66,7 @@ RegisterCommand('-skateleft', function()
 	end
 end)
 
-RegisterKeyMapping('+skateright', 'Skateboard: Right', 'keyboard', 'D')
+RegisterKeyMapping('+skateright', locale("keyMaps", "right"), 'keyboard', 'D')
 RegisterCommand('+skateright', function()
 	if Attached and not overSpeed then
 		if surfboard then
@@ -98,7 +98,7 @@ function surfBoardRotate(right)
 	end)
 end
 
-RegisterKeyMapping('skatejump', 'Skateboard: Jump', 'keyboard', 'SPACE')
+RegisterKeyMapping('skatejump', locale("keyMaps", "jump"), 'keyboard', 'SPACE')
 RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 	if Attached and not surfboard then
 		if not IsEntityInAir(skateboard.Bike) then
@@ -166,7 +166,12 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 		else
 			if trick then return else trick = true end
 			local chance = math.random(1, 3)
-			local skill = isStarted("mz-skills") and exports["mz-skills"]:GetCurrentSkill("Skateboarding").TimeReduction or 0
+
+			local skill = 0
+			if isStarted("jim-skills") then
+				jsonPrint(exports["jim-skills"]:GetCurrentSkill("Skateboarding"))
+				skill = exports["jim-skills"]:GetCurrentSkill("Skateboarding").TimeReduction or 0
+			end
 			--triggerNotify(nil, "Trick "..chance, "success")
 			if chance == 1 then
 				CreateThread(function()
@@ -179,14 +184,18 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 							Wait(5 - (5 * (skill * 5)))
 						else
 							--triggerNotify(nil, (i * speed).."° full cab", "success")
-							if isStarted("mz-skills") then exports["mz-skills"]:UpdateSkill("Skateboarding", (i * speed) / 100) end
+							if isStarted("jim-skills") then
+								exports["jim-skills"]:UpdateSkill("Skateboarding", (i * speed) / 100)
+							end
 							trick = false
 							break
 						end
 					end
 					--triggerNotify(nil, "Full 360° full cab", "success")
 					trick = false
-					if isStarted("mz-skills") then exports["mz-skills"]:UpdateSkill("Skateboarding", 3.6) end
+					if isStarted("jim-skills") then
+						exports["jim-skills"]:UpdateSkill("Skateboarding", 3.6)
+					end
 				end)
 			end
 			if chance == 2 then
@@ -202,13 +211,13 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 							DetachEntity(Ped, false, false)
 							SetPedToRagdoll(Ped, 5000, 4000, 0, true, true, false)
 							AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, false, true, true, true, 1, true)
-							if isStarted("mz-skills") then exports["mz-skills"]:UpdateSkill("Skateboarding", (i * speed) / 100) end
+							if isStarted("jim-skills") then exports["jim-skills"]:UpdateSkill("Skateboarding", (i * speed) / 100) end
 							trick = false
 							break
 						end
 					end
 					trick = false
-					if isStarted("mz-skills") then exports["mz-skills"]:UpdateSkill("Skateboarding", 3.6) end
+					if isStarted("jim-skills") then exports["jim-skills"]:UpdateSkill("Skateboarding", 3.6) end
 				end)
 			end
 			if chance == 3 then
@@ -224,13 +233,13 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 							DetachEntity(Ped, false, false)
 							SetPedToRagdoll(Ped, 5000, 4000, 0, true, true, false)
 							AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, false, true, true, true, 1, true)
-							if isStarted("mz-skills") then exports["mz-skills"]:UpdateSkill("Skateboarding", (i * speed) / 100) end
+							if isStarted("jim-skills") then exports["jim-skills"]:UpdateSkill("Skateboarding", (i * speed) / 100) end
 							trick = false
 							break
 						end
 					end
 					trick = false
-					if isStarted("mz-skills") then exports["mz-skills"]:UpdateSkill("Skateboarding", 3.6) end
+					if isStarted("jim-skills") then exports["jim-skills"]:UpdateSkill("Skateboarding", 3.6) end
 				end)
 			end
 		end

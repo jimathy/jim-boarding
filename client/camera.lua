@@ -1,4 +1,4 @@
-RegisterKeyMapping('skatecam', 'Skateboard: Unlock/Lock Cam', 'keyboard', 'H')
+RegisterKeyMapping('skatecam', locale("info", "lockcam"), 'keyboard', 'H')
 RegisterCommand('skatecam', function()
 	if Attached then
 		SetCamActive(customCam, not IsCamActive(customCam))
@@ -6,7 +6,7 @@ RegisterCommand('skatecam', function()
 		--updateCamLoc()
 	end
 end)
-RegisterKeyMapping('+flipcam', 'Skateboard: Flip Cam', 'keyboard', 'C')
+RegisterKeyMapping('+flipcam', locale("info", "flipCam"), 'keyboard', 'C')
 RegisterCommand('+flipcam', function()
 	if Attached then
 		AttachCamToEntity(customCam, skateboard.Bike, 0.25, 2.0, 1.5, true)
@@ -24,9 +24,9 @@ function updateCamLoc()
 		local ped = PlayerPedId()
 		while Attached do
 			makeInstructionalButtons({
-				{ text = surfboard and Loc[Config.Lan].getoffSurf or Loc[Config.Lan].getoff, keys = { 47 } },
-				{ text = Loc[Config.Lan].lockcam..": "..(toggleCam and "On" or "Off"), keys = { 74} },
-				(not surfboard and { text = Loc[Config.Lan].jump, keys = { 102 } } or nil),
+				{ text = surfboard and locale("info", "getoffSurf") or locale("info", "getoff"), keys = { 47 } },
+				{ text = locale("info", "lockcam")..": "..(toggleCam and "On" or "Off"), keys = { 74} },
+				(not surfboard and { text = locale("info", "jump"), keys = { 102 } } or nil),
 			})
 			local coord = GetOffsetFromEntityInWorldCoords(ped, 0.0, flipCam and -5.0 or 5.0, 0.0)
 			if customCam == nil then

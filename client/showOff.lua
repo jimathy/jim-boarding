@@ -1,5 +1,5 @@
 function showOff(data)
-	exports.ox_inventory:closeInventory()
+	--exports.ox_inventory:closeInventory()
 	local showProp = nil
 	local animTable = {
 		{ animDict = "molly@boombox1",		anim = "boombox1_clip",			bone = 60309, pos = vec3(-0.0050, 0.0320, 0.1640), rot = vec3(44.6076, -112.2983, -86.1199) },
@@ -9,7 +9,7 @@ function showOff(data)
 	local Menu = {}
 	for i = 1, #animTable do
 		Menu[#Menu+1] = {
-			header = "Hold Up "..i,
+			header = locale("menus", "holdUp").." "..i,
 			onSelect = function()
 				if not data.skip then
 					TriggerEvent(getScript()..":Skateboard:PickPlace", data)
@@ -20,7 +20,7 @@ function showOff(data)
 				loadAnimDict(animTable[i].animDict)
 				playAnim(animTable[i].animDict, animTable[i].anim, -1, 11)
 				hold = true
-				drawText(nil, { "[Backspace] Put board down" })
+				drawText(nil, { locale("info", "putDown") })
 				lockInv(true)
 				while hold do
 					Wait(0)
@@ -40,7 +40,7 @@ function showOff(data)
 			end
 		}
 	end
-	openMenu(Menu, { header = "Show The Board Off", })
+	openMenu(Menu, { header = locale("info", "header"), })
 end
 
 function holdBoard(data)
@@ -50,7 +50,7 @@ function holdBoard(data)
 	showProp = makeProp({ prop = data.prop, coords = vec4(0, 0, 0, 0) }, true, true)
 	AttachEntityToEntity(showProp, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 28422), 0.17, -0.04, 0.08, 205.0, 29.0, 258.0,true,true, false, true, 1, true )
 	hold = true
-	drawText(nil, { "[Backspace] Put board down" })
+	drawText(nil, { locale("info", "putDown") })
 	while hold do
 		Wait(0)
 		if IsControlJustReleased(0, 202) then

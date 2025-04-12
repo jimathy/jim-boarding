@@ -105,13 +105,13 @@ RegisterNetEvent(getScript()..":Skateboard:PickPlace", function(data)
 
 			local options = {
 				{ action = function() TriggerEvent(getScript()..":Skateboard:GetOn", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
-					icon = "fas fa-car", label = "Get on", },
+					icon = "fas fa-car", label = locale("targets", "getOn"), },
 				{ action = function() TriggerEvent(getScript()..":Skateboard:PickPlace", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
-					icon = "fas fa-hand-holding", label = "Pick up", },
+					icon = "fas fa-hand-holding", label = locale("targets", "pickUp"), },
 				{ action = function() TriggerEvent(getScript()..":client:showoff", data) end,
-					icon = "far fa-user", label = "Show Off", },
+					icon = "far fa-user", label = locale("targets", "showOff"), },
 				{ action = function() TriggerEvent(getScript()..":client:holdBoard", data) end,
-					icon = "fas fa-hands-holding", label = "Hold", },
+					icon = "fas fa-hands-holding", label = locale("targets", "hold"), },
 			}
 			createEntityTarget(skateboard.Skate, options, 2.5)
 			createEntityTarget(skateboard.Driver, options, 2.5)
