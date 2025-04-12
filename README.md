@@ -45,11 +45,11 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
 ```lua
     ["skateboard_01"] = {
 		label = "Skateboard", weight = 500, stack = false, close = true, description = "Skateboard",
-		client = { image = "skateboard_01.png", event = "jim-board:Skateboard:PickPlace" },
+		client = { image = "skateboard_01.png", event = "jim-boarding:Skateboard:PickPlace" },
 		buttons = {
             {   label = "Show Board",
                 action = function()
-                    TriggerEvent('jim-board:client:showoff', { item = "skateboard_01", skip = true })
+                    TriggerEvent('jim-boarding:client:showoff', { item = "skateboard_01", skip = true })
                 end,
             }
         }
@@ -61,7 +61,7 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
         stack = false,
         close = true,
         description = "",
-        client = { image = "surfboard_01.png", },
+        client = { image = "surfboard_01.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
     ["surfboard_02"] = {
         label = "Surfboard",
@@ -69,7 +69,7 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
         stack = false,
         close = true,
         description = "",
-        client = { image = "surfboard_02.png", },
+        client = { image = "surfboard_02.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
     ["surfboard_03"] = {
         label = "Surfboard",
@@ -77,7 +77,7 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
         stack = false,
         close = true,
         description = "",
-        client = { image = "surfboard_03.png", },
+        client = { image = "surfboard_03.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
     ["surfboard_04"] = {
         label = "Surfboard",
@@ -85,7 +85,7 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
         stack = false,
         close = true,
         description = "",
-        client = { image = "surfboard_04.png", },
+        client = { image = "surfboard_04.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
     ["surfboard_05"] = {
         label = "Surfboard",
@@ -93,8 +93,9 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
         stack = false,
         close = true,
         description = "Surf Rescue",
-        client = { image = "surfboard_05.png", },
+        client = { image = "surfboard_05.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
+
 ```
 4. Add the images to your inventory eg. `[ox]/ox_inventory/web/images`
 
