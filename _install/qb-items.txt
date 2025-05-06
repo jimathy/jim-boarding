@@ -1,0 +1,7 @@
+skateboard_01 = { name = "skateboard_01", label = "Skateboard", weight = 100, type = "item", image = "skateboard_01.png", unique = true, useable = true, shouldClose = true, combinable = nil, description = "Skateboard"},
+
+surfboard_01 = { name = "surfboard_01", label = "Surfboard", weight = 100, type = "item", image = "surfboard_01.png", unique = true, useable = true, shouldClose = true, combinable = nil, description = "Surfboard"},
+surfboard_02 = { name = "surfboard_02", label = "Surfboard", weight = 100, type = "item", image = "surfboard_02.png", unique = true, useable = true, shouldClose = true, combinable = nil, description = "Surfboard"},
+surfboard_03 = { name = "surfboard_03", label = "Surfboard", weight = 100, type = "item", image = "surfboard_03.png", unique = true, useable = true, shouldClose = true, combinable = nil, description = "Surfboard"},
+surfboard_04 = { name = "surfboard_04", label = "Surfboard", weight = 100, type = "item", image = "surfboard_04.png", unique = true, useable = true, shouldClose = true, combinable = nil, description = "Surfboard"},
+surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type = "item", image = "surfboard_05.png", unique = true, useable = true, shouldClose = true, combinable = nil, description = "Surfboard"},
