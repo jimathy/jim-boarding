@@ -1,7 +1,7 @@
 Config = {
     Lan = "en",
     System = {
-        Debug = true,
+        Debug = false,
         EventDebug = false,
 
         Menu = "qb",
