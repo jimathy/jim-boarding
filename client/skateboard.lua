@@ -1,12 +1,14 @@
+isPedCat, isPedDog = false, false
+
 onPlayerLoaded(function()
 	Wait(1000)
 	local Ped = PlayerPedId()
 	local pedModel = GetEntityModel(Ped)
-	isCat = (isCat() or pedModel == `ft-raccoon`) and (pedModel ~= `ft-sphynx`)
-	isDog, notSmallDog = isDog()
-	if isDog and pedModel == `a_c_coyote` then isDog = false end
+	isPedCat = (isCat() or pedModel == `ft-raccoon`) and (pedModel ~= `ft-sphynx`)
+	isPedDog, notSmallDog = isDog()
+	if isPedDog and pedModel == `a_c_coyote` then isPedDog = false end
 	isCoyote = (pedModel == `ft-sphynx` or pedModel == `a_c_coyote`)
-	if pedModel == `ft-capmonkey2` then isDog = true end
+	if pedModel == `ft-capmonkey2` then isPedDog = true end
 end, true)
 
 onResourceStop(function()
@@ -16,11 +18,11 @@ end, true)
 function makeFakeSkateboard(Ped, remove, model) -- The animation for picking up and placing the board
 	lastModel = model
 	local prop = makeProp({ prop = model, coords = vec4(0, 0, 0, 0), false, true})
-	if isCat then
+	if isPedCat then
 		SetPedCanRagdoll(Ped, false)
 		AttachEntityToEntity(prop, Ped, GetPedBoneIndex(Ped, 31086), 0.18, -0.14, 0.0, -87.0, -100.0, 1.0, true, true, false, false, 1, true)
 		ClearPedTasks(Ped)
-	elseif isDog then
+	elseif isPedDog then
 		if notSmallDog then
 			SetPedCanRagdoll(Ped, false)
 			AttachEntityToEntity(prop, Ped, GetPedBoneIndex(Ped, 65068), 0.29, 0.02, -0.18, 0.0, 0.0, 100.0, true, true, false, false, 1, true)
@@ -63,15 +65,18 @@ RegisterNetEvent(getScript()..":Skateboard:PickPlace", function(data)
 			Dir = {}
 		else
 			local pedCoords = GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0.5, 0.5)
-			skateboard.Bike = makeVeh("tribike3", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0))
-			skateboard.Skate = makeProp({ prop = data.prop, coords = vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0) }, 1, 1)
-			while not DoesEntityExist(skateboard.Bike) or not DoesEntityExist(skateboard.Skate) do Wait(5) end
+			skateboard.Bike = makeVeh("tribike3", vec4(pedCoords.x, pedCoords.y, pedCoords.z - 50, 0.0))
+			skateboard.Skate = makeProp({ prop = data.prop, coords = vec4(pedCoords.x, pedCoords.y, pedCoords.z-50, 0.0) }, 1, 1)
+			while not DoesEntityExist(skateboard.Bike) or not DoesEntityExist(skateboard.Skate) do
+				Wait(5)
+			end
 
 			SetEntityNoCollisionEntity(skateboard.Bike, Ped, false)
 			SetEntityNoCollisionEntity(skateboard.Skate, Ped, false)
+			--SetEntityVisible(skateboard.Bike, false, 0)
 
 			Wait(500)
-
+			SetEntityCoords(skateboard.Bike, pedCoords.x, pedCoords.y, pedCoords.z)
 			configureSkateboard(skateboard.Bike)
 
 			SetEntityCompletelyDisableCollision(skateboard.Bike, true, true)
@@ -140,10 +145,10 @@ RegisterNetEvent(getScript()..":Skateboard:GetOn", function()
 	local Ped = PlayerPedId()
 	surfboard = false
 
-	if isCat then
+	if isPedCat then
 		AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.10, -0.78, 0.4, 0.0, 0.0, -15.0, true, true, false, true, 1, true)
 		playAnim("creatures@cat@move", "idle_upp", -1, 1)
-	elseif isDog or isCoyote then
+	elseif isPedDog or isCoyote then
 		if notSmallDog then
 			AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.30, -0.55, 0.4, 0.0, 0.0, -15.0, true, true, false, true, 1, true)
 		else
@@ -174,10 +179,10 @@ RegisterNetEvent(getScript()..":Skateboard:GetOn", function()
 				TaskVehicleTempAction(skateboard.Driver, skateboard.Bike, 6, 2000)
 				Attached = false
 				Dir = {}
-				if isCat then
+				if isPedCat then
 					stopAnim("creatures@cat@move", "idle_upp")
 					stopAnim("creatures@cat@move", "idle_dwn")
-				elseif (isDog or isCoyote) then
+				elseif (isPedDog or isCoyote) then
 					--
 				else
 					stopAnim("move_strafe@stealth", "idle")
