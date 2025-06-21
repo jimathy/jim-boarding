@@ -1,18 +1,20 @@
-# Jim-Skateboard
+# Jim-Boarding
+
+## - [Our Documentation](https://jixelpatterns.gitbook.io/docs)
 
 ## What is it?
 
-"Electric" Skateboard is a script completely remade from, but based on rd_cars.
+Jim-Boarding is a script completely remade from, but based on rd_cars.
 
-This script handles using skateboards as items to ride them around the map
+This script handles using skateboards and Surfboards as items to ride them around the streets or Beaches or Los Santos
 
-The player can do skate tricks on the skateboard to show off their skills
+The player can do tricks on the board to show off their skills
 
 The best part is they can fail them and faceplant it <3
 
 There is also support for animal peds to ride them, they wil thank you but the other players with complain like its the worst thing in their life
 
-Supports the addition of multiple skateboard items if you have custom models you wish to add
+Supports the addition of multiple board items if you have custom models you wish to add
  - Just add a new item, and place the itemname and model in the config
 
 Starting support for SurfBoards, but cant figure out how to shut them up, any help with that would be great
@@ -46,8 +48,7 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
 ### OX:
 4. Add the items to your `[ox]/ox_inventory/data/items.lua`:
 ```lua
-    ["skateboard_01"] = {
-		label = "Skateboard", weight = 500, stack = false, close = true, description = "Skateboard",
+        ["skateboard_01"] = { label = "Skateboard", weight = 500, stack = false, close = true, description = "Skateboard",
 		client = { image = "skateboard_01.png", event = "jim-boarding:Skateboard:PickPlace" },
 		buttons = {
             {   label = "Show Board",
@@ -58,44 +59,19 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
         }
 	},
 
-    ["surfboard_01"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_01"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_01.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_02"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_02"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_02.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_03"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_03"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_03.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_04"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_04"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_04.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_05"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "Surf Rescue",
+    ["surfboard_05"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "Surf Rescue",
         client = { image = "surfboard_05.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
 
@@ -111,6 +87,7 @@ surfboard_05 = { name = "surfboard_05", label = "Surfboard", weight = 100, type 
 - When you want to get off the skateboard press "G"
 - Target the board again and choose "Pick up" to pick it up again
 - Press the arrows to move the skateboard
+- Use "Spacebar" to do tricks, either press or hold down space
 ```
 ## How to add new skateboards/surfboards
 ```

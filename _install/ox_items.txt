@@ -1,5 +1,4 @@
-    ["skateboard_01"] = {
-		label = "Skateboard", weight = 500, stack = false, close = true, description = "Skateboard",
+    ["skateboard_01"] = { label = "Skateboard", weight = 500, stack = false, close = true, description = "Skateboard",
 		client = { image = "skateboard_01.png", event = "jim-boarding:Skateboard:PickPlace" },
 		buttons = {
             {   label = "Show Board",
@@ -10,43 +9,18 @@
         }
 	},
 
-    ["surfboard_01"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_01"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_01.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_02"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_02"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_02.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_03"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_03"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_03.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_04"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "",
+    ["surfboard_04"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "",
         client = { image = "surfboard_04.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
-    ["surfboard_05"] = {
-        label = "Surfboard",
-        weight = 500,
-        stack = false,
-        close = true,
-        description = "Surf Rescue",
+    ["surfboard_05"] = { label = "Surfboard", weight = 500, stack = false, close = true, description = "Surf Rescue",
         client = { image = "surfboard_05.png", event = "jim-boarding:Surfboard:PickPlace" },
     },
