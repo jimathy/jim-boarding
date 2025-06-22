@@ -102,9 +102,9 @@ RegisterKeyMapping('skatejump', locale("keyMaps", "jump"), 'keyboard', 'SPACE')
 RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 	if Attached and not surfboard then
 		if not IsEntityInAir(skateboard.Bike) then
-			if isCat then
+			if isPedCat then
 				playAnim("creatures@cat@move", "idle_dwn", -1, 1)
-			elseif (isDog or isCoyote) then
+			elseif (isPedDog or isCoyote) then
 				--
 			else
 				playAnim("move_crouch_proto", "idle_intro", -1, 1)
@@ -120,9 +120,9 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 					manual = true
 					AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, -0.45, 0.0, -40.0, 90.0, false, true, true, true, 0, true)
 
-					if isCat then
+					if isPedCat then
 						AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, -0.10, -0.82, 40.04, 0.0, 0.0, true, true, false, true, 1, true)
-					elseif (isDog or isCoyote) then
+					elseif (isPedDog or isCoyote) then
 						AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.0, -0.45, 40.4, 0.0, 0.0, true, true, false, true, 1, true)
 					else
 						stopAnim("move_crouch_proto", "idle_intro")
@@ -138,10 +138,10 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 			manual = false
 			--Reset if changes
 			AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, -0.60, 0.0, 0.0, 90.0, -15.0, true, true, true, 2, true)
-			if isCat then
+			if isPedCat then
 				AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.10, -0.78, 0.4, 0.0, 0.0, -15.0, true, true, false, true, 1, true)
 				playAnim("creatures@cat@move", "idle_upp", -1, 1)
-			elseif (isDog or isCoyote) then
+			elseif (isPedDog or isCoyote) then
 				if notSmallDog then
 					AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.30, -0.55, 0.4, 0.0, 0.0, -15.0, true, true, false, true, 1, true)
 				else
@@ -153,11 +153,11 @@ RegisterCommand('skatejump', function() local Ped = PlayerPedId()
 			end
 
 			SetEntityVelocity(skateboard.Bike, vel.x, vel.y, vel.z + boost)
-			if isCat then
+			if isPedCat then
 				stopAnim("move_crouch_proto", "idle_dwn")
 				playAnim("creatures@cat@move", "idle_upp", -1, 1)
 
-			elseif (isDog or isCoyote) then
+			elseif (isPedDog or isCoyote) then
 				--
 			else
 				stopAnim("move_crouch_proto", "idle_intro")

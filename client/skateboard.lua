@@ -4,7 +4,7 @@ onPlayerLoaded(function()
 	Wait(1000)
 	local Ped = PlayerPedId()
 	local pedModel = GetEntityModel(Ped)
-	isPedCat = (isCat() or pedModel == `ft-raccoon`) and (pedModel ~= `ft-sphynx`)
+	isPedCat = (isCat() == true or pedModel == `ft-raccoon`) and (pedModel ~= `ft-sphynx`)
 	isPedDog, notSmallDog = isDog()
 	if isPedDog and pedModel == `a_c_coyote` then isPedDog = false end
 	isCoyote = (pedModel == `ft-sphynx` or pedModel == `a_c_coyote`)

@@ -1,11 +1,11 @@
 function makeFakeSurfboard(Ped, remove, model) -- The animation for picking up and placing the board
 	lastModel = model
 	local prop = makeProp({ prop = model, coords = vec4(0, 0, 0, 0), false, true})
-	if isCat then
+	if isPedCat then
 		SetPedCanRagdoll(Ped, false)
 		AttachEntityToEntity(prop, Ped, GetPedBoneIndex(Ped, 31086), 0.18, -0.14, 0.0, -87.0, -100.0, 1.0, true, true, false, false, 1, true)
 		ClearPedTasks(Ped)
-	elseif isDog then
+	elseif isPedDog then
 		if notSmallDog then
 			SetPedCanRagdoll(Ped, false)
 			AttachEntityToEntity(prop, Ped, GetPedBoneIndex(Ped, 65068), 0.29, 0.02, -0.18, 0.0, 0.0, 100.0, true, true, false, false, 1, true)
@@ -136,10 +136,10 @@ RegisterNetEvent(getScript()..":Surfboard:GetOn", function() local Ped = PlayerP
 
 	SetBoatAnchor(skateboard.Bike, false)
 
-	if isCat then
+	if isPedCat then
 		AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.10, 0.78, 0.4, 0.0, 0.0, -15.0, true, true, false, true, 1, true)
 		playAnim("creatures@cat@move", "idle_upp", -1, 1)
-	elseif isDog or isCoyote then
+	elseif isPedDog or isCoyote then
 		if notSmallDog then
 			AttachEntityToEntity(Ped, skateboard.Bike, 20, 0.0, 0.30, 0.55, 0.4, 0.0, 0.0, -15.0, true, true, false, true, 1, true)
 		else
@@ -179,10 +179,10 @@ RegisterNetEvent(getScript()..":Surfboard:GetOn", function() local Ped = PlayerP
 				TaskVehicleTempAction(skateboard.Driver, skateboard.Bike, 6, 2000)
 				Attached = false
 				Dir = {}
-				if isCat then
+				if isPedCat then
 					stopAnim("creatures@cat@move", "idle_upp")
 					stopAnim("creatures@cat@move", "idle_dwn")
-				elseif (isDog or isCoyote) then
+				elseif (isPedDog or isCoyote) then
 					--
 				else
 					stopAnim("move_strafe@stealth", "idle")
