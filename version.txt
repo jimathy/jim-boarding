@@ -1,6 +1,5 @@
-2.1.01
+2.1.02
 
-- Try to fix the 1 second bike appearing when placing a skateboard
-- Separate isDog and isDog, hopefully fix this for people with this causing errors
+- Actually fix isDog and isDog
 
 https://github.com/jimathy/jim-boarding

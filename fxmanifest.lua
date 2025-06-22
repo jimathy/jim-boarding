@@ -1,6 +1,6 @@
 name "jim-boarding"
 author "Jimathy"
-version "2.1.01"
+version "2.1.02"
 description "Electric Skateboard/Surfboard Script"
 fx_version "cerulean"
 game "gta5"
