@@ -1,16 +1,3 @@
-isPedCat, isPedDog = false, false
-
-onPlayerLoaded(function()
-	Wait(1000)
-	local Ped = PlayerPedId()
-	local pedModel = GetEntityModel(Ped)
-	isPedCat = (isCat() == true or pedModel == `ft-raccoon`) and (pedModel ~= `ft-sphynx`)
-	isPedDog, notSmallDog = isDog()
-	if isPedDog and pedModel == `a_c_coyote` then isPedDog = false end
-	isCoyote = (pedModel == `ft-sphynx` or pedModel == `a_c_coyote`)
-	if pedModel == `ft-capmonkey2` then isPedDog = true end
-end, true)
-
 onResourceStop(function()
 	removeBoard()
 end, true)

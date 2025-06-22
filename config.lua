@@ -38,11 +38,6 @@ lastModel = nil
 customCam = nil
 lastItem = nil
 
-isCat = false
-isDog = false
-isCoyote = false
-notSmallDog = false
-
 surfboard = false
 
 function locale(section, string)
