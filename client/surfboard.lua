@@ -1,6 +1,6 @@
 function makeFakeSurfboard(Ped, remove, model) -- The animation for picking up and placing the board
 	lastModel = model
-	local prop = makeProp({ prop = model, coords = vec4(0, 0, 0, 0), false, true})
+	local prop = makeProp({ prop = model, coords = vec4(0, 0, 0, 0), false, true}, false, true)
 	if isPedCat then
 		SetPedCanRagdoll(Ped, false)
 		AttachEntityToEntity(prop, Ped, GetPedBoneIndex(Ped, 31086), 0.18, -0.14, 0.0, -87.0, -100.0, 1.0, true, true, false, false, 1, true)
@@ -48,9 +48,9 @@ RegisterNetEvent(getScript()..":SurfBoard:PickPlace", function(data)
 			Dir = {}
 		else
 			local pedCoords = GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0.5, -40.5)
-			skateboard.Bike = makeVeh("seashark3", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0))
+			skateboard.Bike = makeVeh("seashark3", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0), true, false)
 			SetEntityCoords(skateboard.Bike, pedCoords)
-			skateboard.Skate = makeProp({ prop = data.prop, coords = vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0) }, 1, 1)
+			skateboard.Skate = makeProp({ prop = data.prop, coords = vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0) }, 1, 1, false)
 			while not DoesEntityExist(skateboard.Bike) or not DoesEntityExist(skateboard.Skate) do Wait(5) end
 			SetEntityVisible(skateboard.Bike, false, 0)
 			pushVehicle(skateboard.Bike)
@@ -80,7 +80,7 @@ RegisterNetEvent(getScript()..":SurfBoard:PickPlace", function(data)
 
 			AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, 0.15, 270.0, 270.0, 270.0, false, true, true, true, 2, true)
 
-			skateboard.Driver = makePed("a_c_chimp", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0), 0, 1, nil, nil)
+			skateboard.Driver = makePed("a_c_chimp", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0), 0, 1, nil, nil, true, false)
 
 			while not DoesEntityExist(skateboard.Driver) do Wait(0) end
 			SetEntityCoords(skateboard.Driver, pedCoords.x, pedCoords.y, pedCoords.z, true)
