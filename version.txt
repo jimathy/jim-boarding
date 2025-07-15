@@ -1,5 +1,5 @@
-2.1.02
+2.1.03
 
-- Actually fix isDog and isDog
+- HotFix for changes in jim_bridge making props visible
 
 https://github.com/jimathy/jim-boarding
