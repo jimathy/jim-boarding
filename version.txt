@@ -1,5 +1,5 @@
-2.1.03
+2.1.04
 
-- HotFix for changes in jim_bridge making props visible
+- Fix typo not letting users place surfboards
 
 https://github.com/jimathy/jim-boarding
