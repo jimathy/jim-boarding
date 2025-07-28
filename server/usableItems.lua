@@ -7,7 +7,7 @@ onResourceStart(function()
 
     for k, v in pairs(SurfboardItemModels) do
         createUseableItem(k, function(source, item)
-            TriggerClientEvent(getScript()..":SurfBoard:PickPlace", source, { name = k })
+            TriggerClientEvent(getScript()..":Surfboard:PickPlace", source, { name = k })
         end)
     end
 end, true)

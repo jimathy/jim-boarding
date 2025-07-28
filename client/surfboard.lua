@@ -1,3 +1,5 @@
+
+
 function makeFakeSurfboard(Ped, remove, model) -- The animation for picking up and placing the board
 	lastModel = model
 	local prop = makeProp({ prop = model, coords = vec4(0, 0, 0, 0), false, true}, false, true)
@@ -26,7 +28,8 @@ function makeFakeSurfboard(Ped, remove, model) -- The animation for picking up a
 	destroyProp(prop)
 end
 
-RegisterNetEvent(getScript()..":SurfBoard:PickPlace", function(data)
+RegisterNetEvent(getScript()..":Surfboard:PickPlace", function(data)
+	print("test")
 	if not data.prop then
 		data.prop = SurfboardItemModels[data.name]
 	end
@@ -105,7 +108,7 @@ RegisterNetEvent(getScript()..":SurfBoard:PickPlace", function(data)
 			local options = {
 				{ action = function() TriggerEvent(getScript()..":Surfboard:GetOn", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
 					icon = "fas fa-car", label = locale("targets", "getOn"), },
-				{ action = function() TriggerEvent(getScript()..":SurfBoard:PickPlace", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
+				{ action = function() TriggerEvent(getScript()..":Surfboard:PickPlace", { board = skateboard.Skate, item = data.item, prop = data.prop }) end,
 					icon = "fas fa-hand-holding", label = locale("targets", "pickUp"), },
 			}
 
@@ -215,5 +218,5 @@ RegisterNetEvent(getScript()..":Surfboard:GetOn", function() local Ped = PlayerP
 end)
 
 if debugMode then
-	RegisterCommand("surf", function() TriggerEvent(getScript()..":SurfBoard:PickPlace", { item = "skateboard", prop = `prop_surf_board_01` }) end)
+	RegisterCommand("surf", function() TriggerEvent(getScript()..":Surfboard:PickPlace", { item = "skateboard", prop = `prop_surf_board_01` }) end)
 end
