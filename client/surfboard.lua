@@ -81,8 +81,11 @@ RegisterNetEvent(getScript()..":Surfboard:PickPlace", function(data)
 			SetVehicleAudioEngineDamageFactor(skateboard.Bike, 0.0)
 			SetVehicleAudioBodyDamageFactor(skateboard.Bike, 0.0)
 
-			AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, 0.15, 270.0, 270.0, 270.0, false, true, true, true, 2, true)
-
+			if data.prop == "prop_beach_lg_surf" then
+				AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, 0.15, 0.0, 180.0, 0.0, false, true, true, true, 2, true)
+			else
+				AttachEntityToEntity(skateboard.Skate, skateboard.Bike, nil, 0.0, 0.0, 0.15, 270.0, 270.0, 270.0, false, true, true, true, 2, true)
+			end
 			skateboard.Driver = makePed("a_c_chimp", vec4(pedCoords.x, pedCoords.y, pedCoords.z, 0.0), 0, 1, nil, nil, true, false)
 
 			while not DoesEntityExist(skateboard.Driver) do Wait(0) end
