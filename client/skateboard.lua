@@ -43,11 +43,13 @@ RegisterNetEvent(getScript()..":Skateboard:PickPlace", function(data)
 	if not IsPedSittingInAnyVehicle(Ped) then
 		if DoesEntityExist(skateboard.Bike) then
 			Attached = false
+
 			Wait(100)
 			stopTempCam()
 			makeFakeSkateboard(Ped, true, data.prop) -- pick up animation
-			currentToken = triggerCallback(AuthEvent)
-			addItem(lastItem, 1)
+
+			triggerCallback(getScript()..":auth:collectBoard")
+
 			skateboard = {}
 			Dir = {}
 		else
@@ -119,10 +121,9 @@ RegisterNetEvent(getScript()..":Skateboard:PickPlace", function(data)
 			storedVariables = skateboard
 			SetEntityCoords(skateboard.Bike, GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0.5, 1.5))
 			SetEntityHeading(skateboard.Bike, GetEntityHeading(Ped)+90)
-			lastItem = data.name
-			if hasItem(data.name, 1) then
-				removeItem(data.name, 1)
-			end
+
+			triggerCallback(getScript()..":auth:logLastBoard", data.name)
+
 			Dir = {}
 		end
 	end
@@ -190,9 +191,10 @@ RegisterNetEvent(getScript()..":Skateboard:GetOn", function()
 			removeEntityTarget(skateboard.Bike)
 			removeEntityTarget(skateboard.Driver)
 			Attached = false
+
 			Wait(100)
-			currentToken = triggerCallback(AuthEvent)
-			addItem(lastItem, 1)
+			triggerCallback(getScript()..":auth:collectBoard")
+
 			skateboard = {}
 			Dir = {}
 		end
