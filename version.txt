@@ -1,5 +1,7 @@
-2.1.04
+2.1.05
 
-- Fix typo not letting users place surfboards
+- Fix alignment for surfboard_05
+- Update locale function
+- Remove client side item functions
 
 https://github.com/jimathy/jim-boarding
